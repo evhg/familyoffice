@@ -4,10 +4,11 @@ Use this copy word for word. `[CONFIRM: …]` marks something still to settle be
 
 ## Still to confirm before launch
 
-1. Where hello@erikverspui.com lands. A test email was accepted without bouncing; check that it arrived.
-2. The Thai holding company's registered name and registration number, once it exists.
+1. KRIO Wellness: our role, the opening date and its Instagram (the entry is a placeholder).
+2. Where hello@erikverspui.com lands. A test email was accepted without bouncing; check that it arrived.
+3. The Thai holding company's registered name and registration number, once it exists.
 
-Settled (November 2026): all four Approach commitments stay, with "Our own capital" reworded; "Erik is a director." stays (his appointment is registered); Surekha's LinkedIn uses her current profile until it is renamed; Vercel's documentation confirms Web Analytics uses no cookies.
+Settled (November 2026): all four Approach commitments stay, with "Our own capital" reworded; Erik's Pad Thai Padel directorship is worded "Erik continues to actively advise as a director on the board."; Surekha's LinkedIn uses her current profile until it is renamed; Vercel's documentation confirms Web Analytics uses no cookies.
 
 ## Links
 
@@ -66,19 +67,29 @@ Lead: We have made twenty private investments since 2024. A few of the companies
 
 **Pad Thai Padel**
 Padel clubs in Thailand and Indonesia.
-We structured its investment round of shares and convertible loans, from November 2025 to April 2026, and brought in new investors. Erik is a director.
+We structured its investment round of shares and convertible loans, from November 2025 to April 2026, and brought in new investors. Erik continues to actively advise as a director on the board.
+Link: Pad Thai Padel on Instagram (https://www.instagram.com/padthaipadel/)
 
 **Lazy Tiger Fitness**
 A fitness club in Bangkok, opened in October 2026.
-We invested in its seed round.
+We invested in its seed round. Surekha sits on the board as a director.
+Link: Lazy Tiger Fitness on Instagram (https://www.instagram.com/lazytigerfitness/)
+
+**KRIO Wellness**
+A wellness club at Royal Phuket Marina, incorporated in 2026.
+Surekha sits on the board as a director.
+[CONFIRM: placeholder. Add our role (founded or invested), the opening date (a public job post says January 2027) and its Instagram once it has one.]
 
 **Paleo Robbie** (the name links to https://paleorobbie.com)
 Healthy meal and grocery delivery in Thailand that cooks and delivers its own food, with about 30,000 deliveries a month.
 Co-founded by Erik, who is still a director and shareholder. The family behind Central Group bought a majority stake in 2019.
+Link: Paleo Robbie on Instagram (https://www.instagram.com/paleorobbie/)
+Tile: the Caveman module, Paleo Robbie's caveman face redrawn as a breeze block.
 
 **Phuket development finance**
-Property developers in Phuket.
-During Covid, Erik provided financing that helped developers finish their projects.
+Botanica and Anchan, property developers in Phuket.
+During Covid, Erik provided bridge financing that helped them finish their projects.
+Link: Anchan on Instagram (https://www.instagram.com/anchanvillasth/). Botanica lists no Instagram account on its website.
 
 ## Partners
 
@@ -91,7 +102,7 @@ Link: Surekha on LinkedIn
 
 **Erik Verspui**
 Partner
-Erik co-founded Paleo Robbie and is still a director and shareholder; the family behind Central Group bought a majority stake in 2019. He helped structure Pad Thai Padel's investment round, and during Covid he financed Phuket developers so they could finish their projects. Erik is Dutch and has lived in Thailand since 2006.
+Erik co-founded Paleo Robbie and is still a director and shareholder; the family behind Central Group bought a majority stake in 2019. He helped structure Pad Thai Padel's investment round, and during Covid he provided bridge financing to Botanica and Anchan, two Phuket developers, so they could finish their projects. Erik is Dutch and has lived in Thailand since 2006.
 Link: Erik on LinkedIn
 
 ## Who we work with

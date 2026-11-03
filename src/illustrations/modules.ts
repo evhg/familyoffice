@@ -18,9 +18,9 @@ export const PITCH = TILE + JOINT;
 const WEB = 8;
 const C = TILE / 2;
 
-export type ModuleName = 'ring' | 'petal' | 'diamond' | 'step' | 'wave' | 'mark';
+export type ModuleName = 'ring' | 'petal' | 'diamond' | 'step' | 'wave' | 'mark' | 'caveman';
 
-export const MODULE_NAMES: ModuleName[] = ['ring', 'petal', 'diamond', 'step', 'wave', 'mark'];
+export const MODULE_NAMES: ModuleName[] = ['ring', 'petal', 'diamond', 'step', 'wave', 'mark', 'caveman'];
 
 const n = (v: number) => Number(v.toFixed(3)).toString();
 
@@ -163,6 +163,42 @@ function mark(): string {
   ]);
 }
 
+/**
+ * 7. Caveman: Paleo Robbie's caveman face, redrawn as a block. The opening is the face:
+ * a jagged fringe of hair across the top, straight sides and a round jaw. The two eyes are
+ * left solid inside it. Used only for Paleo Robbie in Track record.
+ */
+function caveman(): string {
+  const left = 20;
+  const right = TILE - left; // 100
+  const jawY = 64; // centre of the round jaw
+  const r = (right - left) / 2; // 40: jaw radius, so the chin sits at 104, inside the border
+  // The hairline: three pointed tufts of hair hang down over the forehead.
+  const top = 30;
+  const tuft = (x: number, depth: number): [number, number][] => [
+    [x - 6, top],
+    [x, top + depth],
+    [x + 6, top],
+  ];
+  const fringe: [number, number][] = [
+    [left, jawY - 10],
+    [left, top + 4],
+    [left + 4, top],
+    ...tuft(40, 16),
+    ...tuft(60, 18),
+    ...tuft(80, 16),
+    [right - 4, top],
+    [right, top + 4],
+  ];
+  const face =
+    'M' +
+    fringe.map(([x, y]) => `${n(x)} ${n(y)}`).join('L') +
+    `L${n(right)} ${n(jawY)}A${n(r)} ${n(r)} 0 0 1 ${n(left)} ${n(jawY)}Z`;
+  const eye = (cx: number, cy: number, er: number) =>
+    `M${n(cx - er)} ${n(cy)}A${er} ${er} 0 1 0 ${n(cx + er)} ${n(cy)}A${er} ${er} 0 1 0 ${n(cx - er)} ${n(cy)}Z`;
+  return face + eye(44, 66, 7) + eye(76, 66, 7);
+}
+
 export const OPENINGS: Record<ModuleName, string> = {
   ring: ring(),
   petal: petal(),
@@ -170,6 +206,7 @@ export const OPENINGS: Record<ModuleName, string> = {
   step: step(),
   wave: wave(),
   mark: mark(),
+  caveman: caveman(),
 };
 
 /** The block face: the whole tile, with the openings cut out (fill-rule: evenodd). */
@@ -184,6 +221,7 @@ export const MODULE_LABELS: Record<ModuleName, string> = {
   step: 'Step',
   wave: 'Wave',
   mark: 'Mark',
+  caveman: 'Caveman (Paleo Robbie)',
 };
 
 /** Hex values for illustrations rendered outside CSS (share image, favicon, logo). */

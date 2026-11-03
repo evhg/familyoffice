@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Contact from '../components/Contact.astro';
 import Tile from '../illustrations/Tile.astro';
+import Confirm from '../components/Confirm.astro';
 import type { ModuleName } from '../illustrations/modules';
 import { EMAIL, LINKEDIN_ERIK, LINKEDIN_SUREKHA } from '../config';
 import {
@@ -39,33 +40,53 @@ const commitments = [
   },
 ];
 
-type Entry = { name: string; url?: string; module: ModuleName; about: string; did: string };
+type Entry = {
+  name: string;
+  url?: string;
+  module: ModuleName;
+  about: string;
+  did: string;
+  confirm?: string;
+  instagram?: { label: string; url: string }[];
+};
 const track: Entry[] = [
   {
     name: 'Pad Thai Padel',
     module: 'diamond',
     about: 'Padel clubs in Thailand and Indonesia.',
-    did: 'We structured its investment round of shares and convertible loans, from November 2025 to April 2026, and brought in new investors. Erik is a director.',
+    did: 'We structured its investment round of shares and convertible loans, from November 2025 to April 2026, and brought in new investors. Erik continues to actively advise as a director on the board.',
+    instagram: [{ label: 'Pad Thai Padel on Instagram', url: 'https://www.instagram.com/padthaipadel/' }],
   },
   {
     name: 'Lazy Tiger Fitness',
     module: 'step',
     about: 'A fitness club in Bangkok, opened in October 2026.',
-    did: 'We invested in its seed round.',
+    did: 'We invested in its seed round. Surekha sits on the board as a director.',
+    instagram: [{ label: 'Lazy Tiger Fitness on Instagram', url: 'https://www.instagram.com/lazytigerfitness/' }],
+  },
+  {
+    name: 'KRIO Wellness',
+    module: 'wave',
+    about: 'A wellness club at Royal Phuket Marina, incorporated in 2026.',
+    did: 'Surekha sits on the board as a director.',
+    confirm:
+      '[CONFIRM: placeholder. Add our role (founded or invested), the opening date (a public job post says January 2027) and its Instagram once it has one.]',
   },
   {
     name: 'Paleo Robbie',
     url: 'https://paleorobbie.com',
-    module: 'wave',
+    module: 'caveman',
     about:
       'Healthy meal and grocery delivery in Thailand that cooks and delivers its own food, with about 30,000 deliveries a month.',
     did: 'Co-founded by Erik, who is still a director and shareholder. The family behind Central Group bought a majority stake in 2019.',
+    instagram: [{ label: 'Paleo Robbie on Instagram', url: 'https://www.instagram.com/paleorobbie/' }],
   },
   {
     name: 'Phuket development finance',
     module: 'petal',
-    about: 'Property developers in Phuket.',
-    did: 'During Covid, Erik provided financing that helped developers finish their projects.',
+    about: 'Botanica and Anchan, property developers in Phuket.',
+    did: 'During Covid, Erik provided bridge financing that helped them finish their projects.',
+    instagram: [{ label: 'Anchan on Instagram', url: 'https://www.instagram.com/anchanvillasth/' }],
   },
 ];
 
@@ -80,7 +101,7 @@ const partners = [
   {
     id: 'erik',
     name: 'Erik Verspui',
-    bio: 'Erik co-founded Paleo Robbie and is still a director and shareholder; the family behind Central Group bought a majority stake in 2019. He helped structure Pad Thai Padel’s investment round, and during Covid he financed Phuket developers so they could finish their projects. Erik is Dutch and has lived in Thailand since 2006.',
+    bio: 'Erik co-founded Paleo Robbie and is still a director and shareholder; the family behind Central Group bought a majority stake in 2019. He helped structure Pad Thai Padel’s investment round, and during Covid he provided bridge financing to Botanica and Anchan, two Phuket developers, so they could finish their projects. Erik is Dutch and has lived in Thailand since 2006.',
     link: LINKEDIN_ERIK,
     linkLabel: 'Erik on LinkedIn',
   },
@@ -147,6 +168,16 @@ const jsonLd = graph(websiteSchema(), organizationSchema(), ...personSchemas());
                   <h3 class="h-item">{entry.url ? <a href={entry.url}>{entry.name}</a> : entry.name}</h3>
                   <p>{entry.about}</p>
                   <p>{entry.did}</p>
+                  {entry.confirm && (
+                    <p>
+                      <Confirm>{entry.confirm}</Confirm>
+                    </p>
+                  )}
+                  {entry.instagram?.map((ig) => (
+                    <p class="entry__link small">
+                      <a href={ig.url}>{ig.label}</a>
+                    </p>
+                  ))}
                 </div>
               </li>
             ))
@@ -296,6 +327,18 @@ const jsonLd = graph(websiteSchema(), organizationSchema(), ...personSchemas());
 
   .entry__text p + p {
     margin-top: 0.4em;
+  }
+
+  .entry__link {
+    margin-top: 0.2em;
+    font-family: var(--font-sans);
+    font-stretch: 100%;
+  }
+
+  .entry__link a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 
   .partners {
