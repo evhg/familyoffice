@@ -1,0 +1,237 @@
+@import '@fontsource-variable/archivo/wdth.css';
+@import '@fontsource-variable/newsreader/opsz.css';
+@import '@fontsource-variable/newsreader/opsz-italic.css';
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--plaster);
+  color: var(--canopy);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  font-variant-numeric: lining-nums;
+  background: var(--plaster);
+  color: var(--canopy);
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+
+img,
+svg {
+  max-width: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-sans);
+  font-stretch: var(--heading-stretch);
+  font-weight: var(--heading-weight);
+  line-height: var(--leading-heading);
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+/* Letter-spacing -0.01em from 36px up, 0 below */
+.h-hero {
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 1440px) {
+  .h-section {
+    letter-spacing: -0.01em;
+  }
+}
+
+.h-hero {
+  font-size: var(--size-hero);
+  line-height: var(--leading-hero);
+}
+
+.h-section {
+  font-size: var(--size-section);
+  line-height: 1.12;
+}
+
+.h-item {
+  font-size: var(--size-item);
+  line-height: 1.15;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+/* Links: underlined 1px, offset 0.18em, colour change on hover only */
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--teak);
+}
+
+/* A 44px tap target for a link that stands alone in a short line, without moving the line */
+.tap {
+  padding-block: 13px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+:focus-visible {
+  outline: 2px solid var(--teak);
+  outline-offset: 3px;
+}
+
+.on-canopy {
+  background: var(--canopy);
+  color: var(--plaster);
+}
+
+.on-canopy a:hover {
+  color: var(--turmeric);
+}
+
+.on-canopy :focus-visible {
+  outline-color: var(--turmeric);
+}
+
+/* Layout */
+.wrap {
+  width: min(var(--max-width), 100% - 2 * var(--margin));
+  margin-inline: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 32px;
+}
+
+@media (min-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gutter);
+  }
+
+  .grid > .col-head {
+    grid-column: 1 / 5;
+  }
+
+  .grid > .col-body {
+    grid-column: 5 / 12;
+  }
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+.intro {
+  font-size: var(--size-intro);
+  line-height: 1.45;
+}
+
+.small {
+  font-size: var(--size-small);
+}
+
+.secondary {
+  color: var(--moss);
+}
+
+.on-canopy .secondary {
+  color: var(--celadon);
+}
+
+.sans {
+  font-family: var(--font-sans);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--margin);
+  top: 8px;
+  z-index: 10;
+  padding: 10px 14px;
+  background: var(--plaster);
+  color: var(--canopy);
+  font-family: var(--font-sans);
+  font-size: var(--size-small);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Draw the ring on the link's own Plaster box, whatever surface it sits over */
+.skip-link:focus-visible {
+  outline-color: var(--teak);
+  outline-offset: -5px;
+}
+
+/* Previews only: copy that still needs an answer before launch */
+.confirm {
+  background: transparent;
+  color: var(--teak);
+  outline: 1px dashed var(--teak);
+  outline-offset: 2px;
+  font-family: var(--font-sans);
+  font-size: 0.8em;
+  font-stretch: 100%;
+}
+
+.on-canopy .confirm {
+  color: var(--turmeric);
+  outline-color: var(--turmeric);
+}

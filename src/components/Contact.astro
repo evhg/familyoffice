@@ -1,0 +1,46 @@
+---
+import Wall from '../illustrations/Wall.astro';
+import CopyEmail from './CopyEmail.astro';
+---
+
+<section id="contact" class="contact on-canopy" aria-labelledby="contact-heading">
+  <div class="contact__strip">
+    <Wall class="contact__wall" cols={16} rows={1} lead={16} leadRows={[0]} />
+  </div>
+  <div class="wrap grid contact__grid">
+    <h2 id="contact-heading" class="h-section col-head">Talk to us</h2>
+    <div class="col-body">
+      <p class="measure">
+        Tell us briefly about your company, who owns it today and what you are looking for. We read every message and
+        reply within two working days. What you send stays confidential.
+      </p>
+      <div class="contact__email">
+        <CopyEmail />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    margin-top: var(--section-space);
+    padding-bottom: clamp(80px, 11vw, 144px);
+  }
+
+  .contact__strip {
+    overflow: hidden;
+  }
+
+  .contact__strip :global(.contact__wall) {
+    /* The same grid as the hero wall and strip, so both strips run off both sides alike */
+    margin-left: calc(50% + var(--gutter) / 2 - 16 * var(--pitch));
+  }
+
+  .contact__grid {
+    padding-top: clamp(64px, 8vw, 112px);
+  }
+
+  .contact__email {
+    margin-top: clamp(32px, 4vw, 48px);
+  }
+</style>

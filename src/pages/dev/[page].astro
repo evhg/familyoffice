@@ -1,0 +1,128 @@
+---
+// Development only: the module sheet at /dev/modules. Never built for production.
+import '../../styles/global.css';
+import Sprite from '../../illustrations/Sprite.astro';
+import Tile from '../../illustrations/Tile.astro';
+import Wall from '../../illustrations/Wall.astro';
+import { MODULE_LABELS, MODULE_NAMES } from '../../illustrations/modules';
+
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { page: 'modules' } }] : [];
+}
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Modules | Verspui</title>
+  </head>
+  <body>
+    <Sprite />
+    <main class="sheet">
+      <h1 class="h-section">Breeze-block modules</h1>
+
+      <h2 class="h-item">On Plaster: face in Canopy, openings cut out</h2>
+      <ul role="list" class="row">
+        {
+          MODULE_NAMES.map((name) => (
+            <li>
+              <Tile name={name} size={168} />
+              <p class="small">{MODULE_LABELS[name]}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2 class="h-item">At 56px, as in Track record</h2>
+      <ul role="list" class="row">
+        {
+          MODULE_NAMES.map((name) => (
+            <li>
+              <Tile name={name} size={56} />
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2 class="h-item">Wall of each module on Plaster, with 6 unit joints</h2>
+      <div class="row">
+        {
+          MODULE_NAMES.map((name) => (
+            <svg class="mini" viewBox="0 0 372 372" width="186" height="186" aria-hidden="true">
+              {[0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => <use href={`#f-${name}`} x={c * 126} y={r * 126} width="120" height="120" />))}
+            </svg>
+          ))
+        }
+      </div>
+
+      <h2 class="h-item">On Canopy: openings only (hero)</h2>
+      <div class="canopy row">
+        {
+          MODULE_NAMES.map((name) => (
+            <svg viewBox="0 0 120 120" width="168" height="168" aria-hidden="true">
+              <use href={`#o-${name}`} class:list={['open', { mark: name === 'mark' }]} />
+            </svg>
+          ))
+        }
+      </div>
+
+      <h2 class="h-item">Full hero wall, 8 columns by 7 rows, Mark at row 4, column 3</h2>
+      <div class="canopy hero-wall">
+        <Wall cols={8} rows={7} mark={[3, 2]} animate />
+      </div>
+    </main>
+  </body>
+</html>
+
+<style>
+  .sheet {
+    --pitch: 72px;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+    text-align: center;
+  }
+
+  h2 {
+    margin: 64px 0 24px;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .row li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mini {
+    fill: var(--canopy);
+  }
+
+  .canopy {
+    background: var(--canopy);
+    padding: 40px;
+  }
+
+  .open {
+    fill: var(--plaster);
+  }
+
+  .open.mark {
+    fill: var(--turmeric);
+  }
+
+  .hero-wall {
+    display: flex;
+    justify-content: center;
+  }
+</style>

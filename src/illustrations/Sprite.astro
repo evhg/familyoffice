@@ -1,0 +1,27 @@
+---
+// One hidden SVG holding every module, referenced by <use> everywhere else.
+// o-*: openings only (for Canopy surfaces). f-*: the block face with openings cut out.
+import { MODULE_NAMES, OPENINGS, facePath, TILE } from './modules';
+---
+
+<svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0">
+  <defs>
+    {MODULE_NAMES.map((name) => <path id={`o-${name}`} fill-rule="evenodd" d={OPENINGS[name]} />)}
+    {
+      MODULE_NAMES.map((name) => (
+        <symbol id={`f-${name}`} viewBox={`0 0 ${TILE} ${TILE}`}>
+          <path fill-rule="evenodd" d={facePath(name)} />
+        </symbol>
+      ))
+    }
+  </defs>
+</svg>
+
+<style>
+  .sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+import { getNotes } from '../lib/notes';
+
+interface Props {
+  /** On the home page the header sits on the Canopy hero and links jump within the page. */
+  home?: boolean;
+}
+
+const { home = false } = Astro.props;
+const hasNotes = (await getNotes()).length > 0;
+const base = home ? '' : '/';
+
+const links = [
+  { href: `${base}#approach`, label: 'Approach' },
+  { href: `${base}#track-record`, label: 'Track record' },
+  { href: `${base}#partners`, label: 'Partners' },
+  ...(hasNotes ? [{ href: '/notes/', label: 'Notes' }] : []),
+  { href: `${base}#contact`, label: 'Contact', keep: true },
+];
+
+const current = Astro.url.pathname;
+---
+
+<header class:list={['header', { 'on-canopy': home }]}>
+  <div class="wrap header__inner">
+    <a class="wordmark" href="/" aria-current={current === '/' ? 'page' : undefined}>Verspui</a>
+    <nav aria-label="Main">
+      <ul role="list" class="nav">
+        {
+          links.map((link) => (
+            <li class:list={{ 'nav__item--wide': !link.keep }}>
+              <a href={link.href} aria-current={link.href === current ? 'page' : undefined}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 16px;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-sans);
+    font-stretch: var(--wordmark-stretch);
+    font-weight: var(--wordmark-weight);
+    font-size: 1.5rem;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .nav {
+    display: flex;
+    gap: clamp(16px, 2.4vw, 36px);
+  }
+
+  .nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-sans);
+    font-size: var(--size-small);
+    font-stretch: 100%;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .nav a:hover,
+  .nav a[aria-current='page'] {
+    text-decoration-line: underline;
+  }
+
+  .nav__item--wide {
+    display: none;
+  }
+
+  @media (min-width: 720px) {
+    .nav__item--wide {
+      display: block;
+    }
+  }
+</style>

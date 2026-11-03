@@ -1,0 +1,6 @@
+---
+// Copy that still needs an answer before launch. Shown in previews only (LAUNCHED false).
+import { LAUNCHED } from '../config';
+---
+
+{!LAUNCHED && <mark class="confirm"><slot /></mark>}

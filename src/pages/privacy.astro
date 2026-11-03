@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import { EMAIL } from '../config';
+import { graph, organizationSchema } from '../lib/site';
+---
+
+<Base
+  title="Privacy | Verspui"
+  description="We only receive the personal information you choose to send us by email."
+  jsonLd={graph(organizationSchema())}
+>
+  <Header slot="header" />
+  <article class="page wrap grid">
+    <h1 class="h-section col-head">Privacy</h1>
+    <div class="col-body measure prose">
+      <p>
+        We only receive the personal information you choose to send us by email. We use it to reply to you and to
+        consider working together. We keep it confidential, we don’t sell or share it, and we delete it when you ask.
+        Thailand’s Personal Data Protection Act applies. To see or delete what we hold about you, email <a
+          class="tap"
+          href={`mailto:${EMAIL}`}>{EMAIL}</a
+        >.
+      </p>
+      <p>This site counts visits with Vercel Web Analytics, which does not use cookies.</p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .page {
+    padding-block: clamp(48px, 8vw, 120px) clamp(96px, 12vw, 160px);
+  }
+
+  .prose p + p {
+    margin-top: 1em;
+  }
+</style>

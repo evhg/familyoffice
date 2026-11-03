@@ -1,0 +1,134 @@
+:root {
+  /* Colour: the only six colours on the site */
+  --canopy: #1f3a2e;
+  --plaster: #e4e4da;
+  --moss: #4c5e54;
+  --celadon: #9db8a6;
+  --turmeric: #d7a23f;
+  --teak: #7a4e2d;
+
+  /* Type families */
+  --font-sans: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  --font-serif: 'Newsreader Variable', 'Newsreader', Georgia, serif;
+
+  /* Archivo settings */
+  --heading-stretch: 115%;
+  --heading-weight: 600;
+  --wordmark-stretch: 125%;
+  --wordmark-weight: 600;
+
+  /* Sizes: phone (390px) to desktop (1440px), scaled smoothly between */
+  --size-hero: clamp(2.5rem, 1.757rem + 3.048vw, 4.5rem); /* 40 / 72 */
+  --size-section: clamp(1.75rem, 1.564rem + 0.762vw, 2.25rem); /* 28 / 36 */
+  --size-item: clamp(1.3125rem, 1.243rem + 0.286vw, 1.5rem); /* 21 / 24 */
+  --size-intro: clamp(1.3125rem, 1.243rem + 0.286vw, 1.5rem); /* 21 / 24 */
+  --size-body: clamp(1.125rem, 1.055rem + 0.286vw, 1.3125rem); /* 18 / 21 */
+  --size-small: 1rem; /* 16 */
+
+  --leading-body: 1.55;
+  --leading-heading: 1.1;
+  --leading-hero: 1.08;
+
+  /* Reading measure: 60 to 68 characters of Newsreader */
+  --measure: 27.5em;
+
+  /* Layout */
+  --max-width: 1240px;
+  --margin: clamp(20px, 5vw, 72px);
+  --gutter: 24px;
+  --section-space: clamp(96px, 14vw, 192px);
+
+  /* Breeze blocks: one module plus one joint. Phones and tablets: the band starts at the
+     left margin and runs off the right edge through the middle of a module (see below). */
+  --pitch: calc((100vw - var(--margin)) / 4.5);
+}
+
+@media (min-width: 493px) {
+  :root {
+    --pitch: calc((100vw - var(--margin)) / 5.5);
+  }
+}
+
+@media (min-width: 602px) {
+  :root {
+    --pitch: calc((100vw - var(--margin)) / 6.5);
+  }
+}
+
+@media (min-width: 711px) {
+  :root {
+    --pitch: calc((100vw - var(--margin)) / 7.5);
+  }
+}
+
+@media (min-width: 864px) {
+  :root {
+    --pitch: calc((100vw - var(--margin)) / 8.5);
+  }
+}
+
+/*
+ * Desktop: the hero wall starts exactly on grid column 7 (the centre of the page plus half
+ * a gutter) and must run off the right edge through the middle of a module, never on a
+ * joint. So the pitch is chosen per band of widths to fit n and a half modules into that
+ * space, staying between about 88px and 108px (enough for the hero text beside seven rows).
+ */
+@media (min-width: 960px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 4.5);
+  }
+}
+
+@media (min-width: 996px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 5.3);
+  }
+}
+
+@media (min-width: 1036px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 5.5);
+  }
+}
+
+@media (min-width: 1212px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 6.5);
+  }
+}
+
+@media (min-width: 1428px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 7.5);
+  }
+}
+
+@media (min-width: 1644px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 8.5);
+  }
+}
+
+@media (min-width: 1860px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 9.5);
+  }
+}
+
+@media (min-width: 2076px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 10.5);
+  }
+}
+
+@media (min-width: 2292px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 11.5);
+  }
+}
+
+@media (min-width: 2508px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 12.5);
+  }
+}

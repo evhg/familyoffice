@@ -4,15 +4,15 @@ Use this copy word for word. `[CONFIRM: …]` marks something still to settle be
 
 ## Still to confirm before launch
 
-1. The four commitments in Approach. These are public promises; keep only the ones you will stand behind.
-2. Surekha's LinkedIn link.
-3. Where hello@erikverspui.com lands. A test email was accepted without bouncing; check that it arrived.
-4. "Erik is a director." under Pad Thai Padel: keep it only once his appointment is on the company register.
-5. The Thai holding company's registered name and registration number, once it exists.
+1. KRIO Wellness: our role, the opening date and its Instagram (the entry is a placeholder).
+2. Where hello@erikverspui.com lands. A test email was accepted without bouncing; check that it arrived.
+3. The Thai holding company's registered name and registration number, once it exists.
+
+Settled (November 2026): all four Approach commitments stay, with "Our own capital" reworded; Erik's Pad Thai Padel directorship is worded "Erik continues to actively advise as a director on the board."; Surekha's LinkedIn uses her current profile until it is renamed; Vercel's documentation confirms Web Analytics uses no cookies.
 
 ## Links
 
-- Surekha on LinkedIn: [CONFIRM: link]
+- Surekha on LinkedIn: https://www.linkedin.com/in/cathtunti/ (her current profile; change it once renamed)
 - Erik on LinkedIn: https://www.linkedin.com/in/erikverspui/
 - Paleo Robbie: https://paleorobbie.com
 
@@ -39,9 +39,7 @@ Email line: Write to us at {EMAIL}
 
 Heading: How we partner
 
-[CONFIRM: these are public commitments.]
-
-- **Our own capital.** We pay for our shares from our own funds, and we can show where the money came from.
+- **Our own capital.** We invest proprietary capital, with a long-term investment horizon.
 - **A real seat on the board.** We take part in the decisions that shape the company.
 - **Founders run the business day to day.** We work on what we know best and leave the rest to them.
 - **In it for the long term.** We are a family office, not a fund, so there is no deadline to sell.
@@ -69,19 +67,29 @@ Lead: We have made twenty private investments since 2024. A few of the companies
 
 **Pad Thai Padel**
 Padel clubs in Thailand and Indonesia.
-We structured its investment round of shares and convertible loans, from November 2025 to April 2026, and brought in new investors. Erik is a director. [CONFIRM: keep "Erik is a director." only once his appointment is on the company register.]
+We structured its investment round of shares and convertible loans, from November 2025 to April 2026, and brought in new investors. Erik continues to actively advise as a director on the board.
+Link: Pad Thai Padel on Instagram (https://www.instagram.com/padthaipadel/)
 
 **Lazy Tiger Fitness**
 A fitness club in Bangkok, opened in October 2026.
-We invested in its seed round.
+We invested in its seed round. Surekha sits on the board as a director.
+Link: Lazy Tiger Fitness on Instagram (https://www.instagram.com/lazytigerfitness/)
+
+**KRIO Wellness**
+A wellness club at Royal Phuket Marina, incorporated in 2026.
+Surekha sits on the board as a director.
+[CONFIRM: placeholder. Add our role (founded or invested), the opening date (a public job post says January 2027) and its Instagram once it has one.]
 
 **Paleo Robbie** (the name links to https://paleorobbie.com)
 Healthy meal and grocery delivery in Thailand that cooks and delivers its own food, with about 30,000 deliveries a month.
 Co-founded by Erik, who is still a director and shareholder. The family behind Central Group bought a majority stake in 2019.
+Link: Paleo Robbie on Instagram (https://www.instagram.com/paleorobbie/)
+Tile: the Caveman module, Paleo Robbie's caveman face redrawn as a breeze block.
 
 **Phuket development finance**
-Property developers in Phuket.
-During Covid, Erik provided financing that helped developers finish their projects.
+Botanica and Anchan, property developers in Phuket.
+During Covid, Erik provided bridge financing that helped them finish their projects.
+Link: Anchan on Instagram (https://www.instagram.com/anchanvillasth/). Botanica lists no Instagram account on its website.
 
 ## Partners
 
@@ -94,7 +102,7 @@ Link: Surekha on LinkedIn
 
 **Erik Verspui**
 Partner
-Erik co-founded Paleo Robbie and is still a director and shareholder; the family behind Central Group bought a majority stake in 2019. He helped structure Pad Thai Padel's investment round, and during Covid he financed Phuket developers so they could finish their projects. Erik is Dutch and has lived in Thailand since 2006.
+Erik co-founded Paleo Robbie and is still a director and shareholder; the family behind Central Group bought a majority stake in 2019. He helped structure Pad Thai Padel's investment round, and during Covid he provided bridge financing to Botanica and Anchan, two Phuket developers, so they could finish their projects. Erik is Dutch and has lived in Thailand since 2006.
 Link: Erik on LinkedIn
 
 ## Who we work with
@@ -139,7 +147,7 @@ Heading: Privacy
 
 We only receive the personal information you choose to send us by email. We use it to reply to you and to consider working together. We keep it confidential, we don't sell or share it, and we delete it when you ask. Thailand's Personal Data Protection Act applies. To see or delete what we hold about you, email {EMAIL}.
 
-This site counts visits with Vercel Web Analytics, which does not use cookies. [CONFIRM: check this is still true before launch.]
+This site counts visits with Vercel Web Analytics, which does not use cookies.
 
 ## Notes pages
 

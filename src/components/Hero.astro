@@ -1,0 +1,126 @@
+---
+import Wall from '../illustrations/Wall.astro';
+
+interface Props {
+  email: string;
+}
+
+const { email } = Astro.props;
+
+// Desktop: the wall fills columns 7 to 12 and bleeds off the top, right and bottom.
+// Its last row continues to the left as the edge strip under the text.
+// The stage is 8.6 modules tall: the strip, 7 whole rows, and 0.6 of a row cut by the top edge.
+const ROWS = 20; // drawn rows above the strip; the stage clips the ones it has no room for,
+// and the spare rows keep the wall reaching the top if someone enlarges the text
+const STRIP = ROWS; // index of the strip row
+const LEAD = 16; // strip columns to the left of the wall
+const COLS = 16; // more than any screen shows, so the wall always runs off the right edge
+const FIRST_VISIBLE = ROWS - 8; // the row cut by the top edge
+---
+
+<section class="hero on-canopy" aria-labelledby="hero-heading">
+  <div class="hero__stage">
+    <div class="wrap grid hero__grid">
+      <div class="hero__text">
+        <h1 id="hero-heading" class="h-hero">A strategic Thai partner in business and real estate.</h1>
+        <p class="intro hero__intro">
+          Verspui is the family office of Surekha and Erik Verspui, in Phuket and Bangkok. We become the majority Thai
+          shareholder in businesses started by founders from abroad. We put in our own capital, sit on the board, and
+          work with the founders to grow the business.
+        </p>
+        <p class="hero__email">Write to us at <a href={`mailto:${email}`}>{email}</a></p>
+      </div>
+    </div>
+
+    <Wall
+      class="hero__wall hero__wall--wide"
+      cols={COLS}
+      rows={ROWS + 1}
+      lead={LEAD}
+      leadRows={[STRIP]}
+      mark={[FIRST_VISIBLE + 3, 2]}
+      firstRow={FIRST_VISIBLE}
+      animate
+    />
+  </div>
+
+  <div class="hero__band">
+    <Wall class="hero__wall hero__wall--band" cols={9} rows={4} mark={[2, 2]} animate />
+  </div>
+</section>
+
+<style>
+  .hero {
+    --text-gap: clamp(24px, 2.6vw, 36px);
+  }
+
+  .hero__stage {
+    position: relative;
+  }
+
+  .hero__text {
+    padding-top: clamp(40px, 7vw, 96px);
+    padding-bottom: clamp(56px, 8vw, 72px);
+  }
+
+  .hero__intro {
+    margin-top: var(--text-gap);
+    max-width: 28em;
+  }
+
+  .hero__email {
+    margin-top: var(--text-gap);
+    font-size: var(--size-body);
+  }
+
+  /* A 44px tap target without changing the line */
+  .hero__email a {
+    padding-block: 13px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .hero__stage :global(.hero__wall--wide) {
+    display: none;
+  }
+
+  .hero__band {
+    padding-left: var(--margin);
+    overflow: hidden;
+  }
+
+  @media (min-width: 960px) {
+    .hero__stage {
+      overflow: hidden;
+      /* Seven rows of wall and a cut row above the edge strip. The text is sized to fit;
+         min-height lets the stage grow rather than overlap if someone enlarges the text. */
+      min-height: calc(var(--pitch) * 8.6);
+      padding-bottom: var(--pitch);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero__grid {
+      flex: 1;
+      align-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero__text {
+      grid-column: 1 / 7;
+      padding-block: 40px 48px;
+    }
+
+    .hero__stage :global(.hero__wall--wide) {
+      display: block;
+      position: absolute;
+      left: calc(50% + var(--gutter) / 2 - 16 * var(--pitch));
+      bottom: 0;
+    }
+
+    .hero__band {
+      display: none;
+    }
+  }
+</style>
