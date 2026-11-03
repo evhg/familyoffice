@@ -1,0 +1,311 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Contact from '../components/Contact.astro';
+import Tile from '../illustrations/Tile.astro';
+import type { ModuleName } from '../illustrations/modules';
+import { EMAIL, LINKEDIN_ERIK, LINKEDIN_SUREKHA } from '../config';
+import {
+  HOME_DESCRIPTION,
+  HOME_TITLE,
+  SHARE_TITLE,
+  WHAT_WE_BRING,
+  graph,
+  organizationSchema,
+  personSchemas,
+  websiteSchema,
+} from '../lib/site';
+import { formatDate, getNotes, isoDate, noteModule, notePath } from '../lib/notes';
+
+const notes = (await getNotes()).slice(0, 3);
+
+const commitments = [
+  {
+    lead: 'Our own capital.',
+    text: 'We invest proprietary capital, with a long-term investment horizon.',
+  },
+  {
+    lead: 'A real seat on the board.',
+    text: 'We take part in the decisions that shape the company.',
+  },
+  {
+    lead: 'Founders run the business day to day.',
+    text: 'We work on what we know best and leave the rest to them.',
+  },
+  {
+    lead: 'In it for the long term.',
+    text: 'We are a family office, not a fund, so there is no deadline to sell.',
+  },
+];
+
+type Entry = { name: string; url?: string; module: ModuleName; about: string; did: string };
+const track: Entry[] = [
+  {
+    name: 'Pad Thai Padel',
+    module: 'diamond',
+    about: 'Padel clubs in Thailand and Indonesia.',
+    did: 'We structured its investment round of shares and convertible loans, from November 2025 to April 2026, and brought in new investors. Erik is a director.',
+  },
+  {
+    name: 'Lazy Tiger Fitness',
+    module: 'step',
+    about: 'A fitness club in Bangkok, opened in October 2026.',
+    did: 'We invested in its seed round.',
+  },
+  {
+    name: 'Paleo Robbie',
+    url: 'https://paleorobbie.com',
+    module: 'wave',
+    about:
+      'Healthy meal and grocery delivery in Thailand that cooks and delivers its own food, with about 30,000 deliveries a month.',
+    did: 'Co-founded by Erik, who is still a director and shareholder. The family behind Central Group bought a majority stake in 2019.',
+  },
+  {
+    name: 'Phuket development finance',
+    module: 'petal',
+    about: 'Property developers in Phuket.',
+    did: 'During Covid, Erik provided financing that helped developers finish their projects.',
+  },
+];
+
+const partners = [
+  {
+    id: 'surekha',
+    name: 'Surekha Verspui',
+    bio: 'Surekha is Thai. She is general partner of a private AI venture fund and an angel investor in Thai companies. Earlier, she was Vice President of Strategy at Agnostic Fund, a hedge fund, and Head of the Grants Program at the Ethereum Foundation. She studied computer science at Harvard.',
+    link: LINKEDIN_SUREKHA,
+    linkLabel: 'Surekha on LinkedIn',
+  },
+  {
+    id: 'erik',
+    name: 'Erik Verspui',
+    bio: 'Erik co-founded Paleo Robbie and is still a director and shareholder; the family behind Central Group bought a majority stake in 2019. He helped structure Pad Thai Padel’s investment round, and during Covid he financed Phuket developers so they could finish their projects. Erik is Dutch and has lived in Thailand since 2006.',
+    link: LINKEDIN_ERIK,
+    linkLabel: 'Erik on LinkedIn',
+  },
+];
+
+const audiences = [
+  'Founders from abroad starting a business in Thailand that needs a Thai majority shareholder.',
+  'Companies whose Thai shareholder plays no real part, looking for one who does.',
+  'Real estate and hospitality businesses in Phuket: developers, hotels and rental operators.',
+  'Consumer, wellness, food and software companies with room to grow.',
+];
+
+const jsonLd = graph(websiteSchema(), organizationSchema(), ...personSchemas());
+---
+
+<Base title={HOME_TITLE} description={HOME_DESCRIPTION} shareTitle={SHARE_TITLE} jsonLd={jsonLd}>
+  <Header home slot="header" />
+  <Hero email={EMAIL} />
+
+  <section id="approach" class="section" aria-labelledby="approach-heading">
+    <div class="wrap grid">
+      <h2 id="approach-heading" class="h-section col-head">How we partner</h2>
+      <div class="col-body measure">
+        <ul role="list" class="rows">
+          {
+            commitments.map((item) => (
+              <li>
+                <strong class="lead">{item.lead}</strong> {item.text}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="closing">We never hold shares on anyone’s behalf.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="what-we-bring" class="section" aria-labelledby="bring-heading">
+    <div class="wrap grid">
+      <h2 id="bring-heading" class="h-section col-head">What we bring</h2>
+      <div class="col-body measure">
+        <p>Between us we have founded, funded and grown companies in Thailand. This is where we help most:</p>
+        <ul role="list" class="rows rows--tight">
+          {WHAT_WE_BRING.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="track-record" class="section" aria-labelledby="track-heading">
+    <div class="wrap grid">
+      <h2 id="track-heading" class="h-section col-head">Track record</h2>
+      <div class="col-body">
+        <p class="measure">
+          We have made twenty private investments since 2024. A few of the companies we have founded, funded or helped
+          grow:
+        </p>
+        <ul role="list" class="entries">
+          {
+            track.map((entry) => (
+              <li class="entry">
+                <Tile name={entry.module} size={56} />
+                <div class="entry__text measure">
+                  <h3 class="h-item">{entry.url ? <a href={entry.url}>{entry.name}</a> : entry.name}</h3>
+                  <p>{entry.about}</p>
+                  <p>{entry.did}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="partners" class="section" aria-labelledby="partners-heading">
+    <div class="wrap grid">
+      <h2 id="partners-heading" class="h-section col-head">Partners</h2>
+      <div class="col-body">
+        <ul role="list" class="partners">
+          {
+            partners.map((p) => (
+              <li class="partner measure" id={p.id}>
+                <h3 class="h-item">{p.name}</h3>
+                <p class="partner__role secondary">Partner</p>
+                <p>{p.bio}</p>
+                {p.link && (
+                  <p class="partner__link">
+                    <a href={p.link}>{p.linkLabel}</a>
+                  </p>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="who-we-work-with" class="section" aria-labelledby="who-heading">
+    <div class="wrap grid">
+      <h2 id="who-heading" class="h-section col-head">Who we work with</h2>
+      <div class="col-body measure">
+        <ul role="list" class="rows">
+          {audiences.map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="closing">We take on a small number of new partnerships each year.</p>
+      </div>
+    </div>
+  </section>
+
+  {
+    notes.length > 0 && (
+      <section id="notes" class="section" aria-labelledby="notes-heading">
+        <div class="wrap grid">
+          <h2 id="notes-heading" class="h-section col-head">Notes</h2>
+          <div class="col-body">
+            <p class="measure">Plain-English notes on owning and running a business in Thailand.</p>
+            <ul role="list" class="entries">
+              {notes.map((note) => (
+                <li class="entry">
+                  <Tile name={noteModule(note)} size={40} />
+                  <div class="entry__text measure">
+                    <h3 class="h-item">
+                      <a href={notePath(note)}>{note.data.title}</a>
+                    </h3>
+                    <p class="small secondary">
+                      <time datetime={isoDate(note.data.published)}>{formatDate(note.data.published)}</time>
+                    </p>
+                    <p>{note.data.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p class="more">
+              <a href="/notes/">All notes</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <Contact />
+</Base>
+
+<style>
+  .section {
+    padding-top: var(--section-space);
+  }
+
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1em;
+  }
+
+  .rows--tight {
+    gap: 0.55em;
+    margin-top: 1.1em;
+  }
+
+  .lead {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-stretch: 100%;
+    font-size: 0.92em;
+  }
+
+  .closing {
+    margin-top: 1.6em;
+  }
+
+  .entries {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(40px, 5vw, 56px);
+    margin-top: clamp(40px, 5vw, 56px);
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    column-gap: clamp(20px, 2.4vw, 32px);
+    align-items: start;
+  }
+
+  .entry :global(.tile) {
+    margin-top: 2px;
+  }
+
+  .entry__text h3 {
+    margin-bottom: 0.35em;
+  }
+
+  .entry__text p + p {
+    margin-top: 0.4em;
+  }
+
+  .partners {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(48px, 6vw, 72px);
+  }
+
+  .partner__role {
+    margin-top: 0.2em;
+    margin-bottom: 0.7em;
+    font-family: var(--font-sans);
+    font-size: var(--size-small);
+    font-stretch: 100%;
+  }
+
+  .partner__link {
+    margin-top: 0.6em;
+  }
+
+  .partner__link a,
+  .more a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .more {
+    margin-top: 32px;
+  }
+</style>

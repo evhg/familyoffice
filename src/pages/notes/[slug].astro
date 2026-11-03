@@ -1,0 +1,221 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Tile from '../../illustrations/Tile.astro';
+import { formatDate, getNotes, isoDate, noteModule, notePath, type Note } from '../../lib/notes';
+import { absolute, graph, ids, organizationSchema, personSchemas } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note, all: notes } }));
+}
+
+interface Props {
+  note: Note;
+  all: Note[];
+}
+
+const { note, all } = Astro.props;
+const { Content } = await render(note);
+const { title, description, published, updated, sources } = note.data;
+
+// Two related notes: the ones named in frontmatter first, then the newest others.
+const named = note.data.related
+  .map((slug) => all.find((n) => n.id === slug))
+  .filter((n): n is Note => !!n && n.id !== note.id);
+const others = all.filter((n) => n.id !== note.id && !named.includes(n));
+const related = [...named, ...others].slice(0, 2);
+
+const url = absolute(notePath(note));
+const surekha = personSchemas()[0];
+const jsonLd = graph(
+  organizationSchema(),
+  surekha,
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    datePublished: isoDate(published),
+    dateModified: isoDate(updated ?? published),
+    author: { '@id': ids.SUREKHA_ID },
+    publisher: { '@id': ids.ORG_ID },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    image: absolute('/og.png'),
+    inLanguage: 'en-GB',
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Verspui', item: absolute('/') },
+      { '@type': 'ListItem', position: 2, name: 'Notes', item: absolute('/notes/') },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+);
+---
+
+<Base
+  title={`${title} | Verspui`}
+  description={description}
+  shareTitle={title}
+  type="article"
+  jsonLd={jsonLd}
+  published={published}
+  modified={updated ?? published}
+>
+  <Header slot="header" />
+  <article class="note wrap grid">
+    <header class="col-head note__head">
+      <Tile name={noteModule(note)} size={40} />
+    </header>
+    <div class="col-body">
+      <h1 class="h-section measure">
+        {title}
+        {note.data.draft && <span class="confirm">Draft</span>}
+      </h1>
+      <div class="note__meta small">
+        <p>By Surekha Verspui</p>
+        <p class="secondary">
+          Published <time datetime={isoDate(published)}>{formatDate(published)}</time>.{
+            updated && (
+              <>
+                {' '}
+                Updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time>.
+              </>
+            )
+          }
+        </p>
+      </div>
+
+      <div class="prose measure">
+        <Content />
+      </div>
+
+      {
+        sources.length > 0 && (
+          <section class="note__sources measure" aria-labelledby="sources-heading">
+            <h2 id="sources-heading" class="h-item">
+              Sources
+            </h2>
+            <ul role="list">
+              {sources.map((s) => (
+                <li class="small">
+                  <a href={s.url}>{s.title}</a>, {s.publisher},{' '}
+                  <time datetime={isoDate(s.date)}>{formatDate(s.date)}</time>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+
+      <div class="note__end measure">
+        <p>This is general information, not legal advice. Rules change, so check your situation with a Thai lawyer.</p>
+        <p>Looking for a Thai partner who invests and takes part? <a href="/#contact">Write to us</a>.</p>
+      </div>
+
+      {
+        related.length > 0 && (
+          <nav class="note__related measure" aria-labelledby="related-heading">
+            <h2 id="related-heading" class="h-item">
+              Related notes
+            </h2>
+            <ul role="list">
+              {related.map((r) => (
+                <li>
+                  <a href={notePath(r)}>{r.data.title}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
+
+      <p class="note__back"><a href="/notes/">All notes</a></p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .note {
+    padding-block: clamp(48px, 8vw, 120px) clamp(96px, 12vw, 160px);
+  }
+
+  .note__meta {
+    margin-top: 20px;
+    font-family: var(--font-sans);
+    font-stretch: 100%;
+  }
+
+  .prose {
+    margin-top: clamp(40px, 5vw, 64px);
+  }
+
+  .prose :global(h2) {
+    font-size: var(--size-item);
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+  }
+
+  .prose :global(h3) {
+    font-size: var(--size-body);
+    margin-top: 1.6em;
+    margin-bottom: 0.4em;
+  }
+
+  .prose :global(p + p),
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-top: 1em;
+  }
+
+  .prose :global(li + li) {
+    margin-top: 0.4em;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.2em;
+  }
+
+  .prose :global(em),
+  .prose :global(cite) {
+    font-style: italic;
+  }
+
+  .note__sources,
+  .note__end,
+  .note__related {
+    margin-top: clamp(48px, 6vw, 72px);
+  }
+
+  .note__sources ul,
+  .note__related ul {
+    margin-top: 0.8em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+  }
+
+  .note__end p + p {
+    margin-top: 1em;
+  }
+
+  .note__back {
+    margin-top: clamp(48px, 6vw, 72px);
+  }
+
+  .note__back a,
+  .note__related a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  @media (max-width: 959px) {
+    .note__head {
+      display: none;
+    }
+  }
+</style>

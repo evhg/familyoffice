@@ -1,0 +1,82 @@
+---
+// The Notes listing at /notes/. Not built at all while no note is published.
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Tile from '../../illustrations/Tile.astro';
+import { formatDate, getNotes, isoDate, noteModule, notePath } from '../../lib/notes';
+import { absolute, graph, organizationSchema } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.length > 0 ? [{ params: { index: undefined } }] : [];
+}
+
+const notes = await getNotes();
+const intro =
+  'Plain-English notes on owning and running a business in Thailand. General information, not legal advice.';
+
+const jsonLd = graph(organizationSchema(), {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Verspui', item: absolute('/') },
+    { '@type': 'ListItem', position: 2, name: 'Notes', item: absolute('/notes/') },
+  ],
+});
+---
+
+<Base title="Notes | Verspui" description={intro} jsonLd={jsonLd}>
+  <Header slot="header" />
+  <div class="page wrap grid">
+    <div class="col-head">
+      <h1 class="h-section">Notes</h1>
+    </div>
+    <div class="col-body">
+      <p class="measure">{intro}</p>
+      <ul role="list" class="list">
+        {
+          notes.map((note) => (
+            <li class="item">
+              <Tile name={noteModule(note)} size={40} />
+              <div class="measure">
+                <h2 class="h-item">
+                  <a href={notePath(note)}>{note.data.title}</a>
+                  {note.data.draft && <span class="confirm">Draft</span>}
+                </h2>
+                <p class="small secondary date">
+                  <time datetime={isoDate(note.data.published)}>{formatDate(note.data.published)}</time>
+                </p>
+                <p>{note.data.description}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page {
+    padding-block: clamp(48px, 8vw, 120px) clamp(96px, 12vw, 160px);
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(40px, 5vw, 56px);
+    margin-top: clamp(40px, 5vw, 64px);
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: clamp(20px, 2.4vw, 32px);
+    align-items: start;
+  }
+
+  .date {
+    margin-block: 0.35em 0.3em;
+    font-family: var(--font-sans);
+    font-stretch: 100%;
+  }
+</style>

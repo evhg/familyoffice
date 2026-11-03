@@ -1,0 +1,49 @@
+:root {
+  /* Colour: the only six colours on the site */
+  --canopy: #1f3a2e;
+  --plaster: #e4e4da;
+  --moss: #4c5e54;
+  --celadon: #9db8a6;
+  --turmeric: #d7a23f;
+  --teak: #7a4e2d;
+
+  /* Type families */
+  --font-sans: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  --font-serif: 'Newsreader Variable', 'Newsreader', Georgia, serif;
+
+  /* Archivo settings */
+  --heading-stretch: 115%;
+  --heading-weight: 600;
+  --wordmark-stretch: 125%;
+  --wordmark-weight: 600;
+
+  /* Sizes: phone (390px) to desktop (1440px), scaled smoothly between */
+  --size-hero: clamp(2.5rem, 1.757rem + 3.048vw, 4.5rem); /* 40 / 72 */
+  --size-section: clamp(1.75rem, 1.564rem + 0.762vw, 2.25rem); /* 28 / 36 */
+  --size-item: clamp(1.3125rem, 1.243rem + 0.286vw, 1.5rem); /* 21 / 24 */
+  --size-intro: clamp(1.3125rem, 1.243rem + 0.286vw, 1.5rem); /* 21 / 24 */
+  --size-body: clamp(1.125rem, 1.055rem + 0.286vw, 1.3125rem); /* 18 / 21 */
+  --size-small: 1rem; /* 16 */
+
+  --leading-body: 1.55;
+  --leading-heading: 1.1;
+  --leading-hero: 1.08;
+
+  /* Reading measure: 60 to 68 characters of Newsreader */
+  --measure: 27.5em;
+
+  /* Layout */
+  --max-width: 1240px;
+  --margin: clamp(20px, 5vw, 72px);
+  --gutter: 24px;
+  --section-space: clamp(96px, 14vw, 192px);
+
+  /* Breeze blocks: one module plus one joint */
+  --pitch: clamp(64px, 16.5vw, 104px);
+}
+
+@media (min-width: 960px) {
+  :root {
+    --pitch: clamp(72px, 6.6vw, 104px);
+  }
+}

@@ -1,0 +1,82 @@
+---
+import '../styles/global.css';
+import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import newsreaderLatin from '@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2?url';
+import Analytics from '@vercel/analytics/astro';
+import { LAUNCHED } from '../config';
+import { absolute } from '../lib/site';
+import Sprite from '../illustrations/Sprite.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  shareTitle?: string;
+  type?: 'website' | 'article';
+  jsonLd?: object;
+  /** Extra Open Graph tags for articles. */
+  published?: Date;
+  modified?: Date;
+}
+
+const { title, description, shareTitle = title, type = 'website', jsonLd, published, modified } = Astro.props;
+
+const canonical = absolute(Astro.url.pathname);
+const shareImage = absolute('/og.png');
+const ld = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null;
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {!LAUNCHED && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#1F3A2E" />
+
+    <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={newsreaderLatin} as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Verspui" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:title" content={shareTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={shareTitle} />
+    {published && <meta property="article:published_time" content={published.toISOString()} />}
+    {modified && <meta property="article:modified_time" content={modified.toISOString()} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={shareTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={shareImage} />
+
+    {ld && <script type="application/ld+json" set:html={ld} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Sprite />
+    <slot name="header" />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    {LAUNCHED && <Analytics />}
+  </body>
+</html>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+</style>

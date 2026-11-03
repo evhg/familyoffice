@@ -1,0 +1,121 @@
+---
+/**
+ * A screen wall drawn as openings only: Plaster shapes on the Canopy field,
+ * light coming through shade. Used for the hero wall, the hero edge strip,
+ * the phone band and the contact strip.
+ *
+ * The wall is laid out on a grid of `cols` x `rows` modules. Columns with a
+ * negative index (`lead` of them) extend the given rows to the left, which is
+ * how the hero's bottom strip runs the full width under the text.
+ */
+import { PITCH, checker, type ModuleName } from './modules';
+
+interface Props {
+  cols: number;
+  rows: number;
+  /** Extra columns to the left of column 0, filled only on the rows listed in leadRows. */
+  lead?: number;
+  leadRows?: number[];
+  /** Zero-based [row, col] of the single Mark module, if any. */
+  mark?: [number, number];
+  /** Light up row by row on first load. */
+  animate?: boolean;
+  /** Offset the checkerboard, so strips can continue the pattern of the wall above. */
+  phase?: number;
+  class?: string;
+}
+
+const { cols, rows, lead = 0, leadRows = [], mark, animate = false, phase = 0, class: className } = Astro.props;
+
+type Cell = { x: number; y: number; name: ModuleName; delay: number; isMark: boolean };
+const cells: Cell[] = [];
+
+// Total time for the sequence: about 1.6 seconds including each opening's fade.
+const ROW_STEP = 130;
+const COL_STEP = 35;
+
+for (let r = 0; r < rows; r++) {
+  const from = leadRows.includes(r) ? -lead : 0;
+  for (let c = from; c < cols; c++) {
+    const isMark = !!mark && mark[0] === r && mark[1] === c;
+    cells.push({
+      x: (c + lead) * PITCH,
+      y: r * PITCH,
+      name: isMark ? 'mark' : checker(r + phase, c),
+      delay: r * ROW_STEP + Math.max(c, 0) * COL_STEP,
+      isMark,
+    });
+  }
+}
+
+const width = (cols + lead) * PITCH;
+const height = rows * PITCH;
+---
+
+<svg
+  class:list={['wall', { 'wall--animate': animate }, className]}
+  viewBox={`0 0 ${width} ${height}`}
+  style={`--cols:${cols + lead};--rows:${rows}`}
+  aria-hidden="true"
+  focusable="false"
+>
+  {
+    cells.map((cell) => (
+      <use
+        href={`#o-${cell.name}`}
+        x={cell.x}
+        y={cell.y}
+        class:list={['opening', { 'opening--mark': cell.isMark }]}
+        style={animate ? `--d:${cell.delay}ms` : undefined}
+      />
+    ))
+  }
+</svg>
+
+<style>
+  .wall {
+    display: block;
+    width: calc(var(--cols) * var(--pitch));
+    height: calc(var(--rows) * var(--pitch));
+    /* The grid is drawn on a 126 unit pitch; place the 6 unit joint evenly around each module. */
+    overflow: visible;
+  }
+
+  .opening {
+    fill: var(--plaster);
+  }
+
+  .opening--mark {
+    fill: var(--turmeric);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .wall--animate .opening {
+      animation: light-up 420ms ease-out var(--d, 0ms) both;
+    }
+
+    .wall--animate .opening--mark {
+      animation:
+        light-up 420ms ease-out var(--d, 0ms) both,
+        mark-up 500ms ease-in-out 1300ms forwards;
+    }
+  }
+
+  @keyframes light-up {
+    from {
+      fill: var(--moss);
+    }
+    to {
+      fill: var(--plaster);
+    }
+  }
+
+  @keyframes mark-up {
+    from {
+      fill: var(--plaster);
+    }
+    to {
+      fill: var(--turmeric);
+    }
+  }
+</style>
