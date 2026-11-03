@@ -21,8 +21,9 @@ for (const { w, h, name } of widths.concat([{ w: 320, h: 640, name: 'narrow' }])
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     report.push(`${name} ${w}px ${p}: horizontal overflow ${overflow}px`);
     if (name === 'narrow') continue;
-    await page.screenshot({ path: `${out}/${slug}-${name}-first-screen.png` });
-    await page.screenshot({ path: `${out}/${slug}-${name}-full.png`, fullPage: true });
+    // animations: 'disabled' shows the hero in its final state (full-page capture restarts CSS animations)
+    await page.screenshot({ path: `${out}/${slug}-${name}-first-screen.png`, animations: 'disabled' });
+    await page.screenshot({ path: `${out}/${slug}-${name}-full.png`, fullPage: true, animations: 'disabled' });
   }
   await ctx.close();
 }

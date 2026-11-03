@@ -10,7 +10,8 @@ const { email } = Astro.props;
 // Desktop: the wall fills columns 7 to 12 and bleeds off the top, right and bottom.
 // Its last row continues to the left as the edge strip under the text.
 // The stage is 8.6 modules tall: the strip, 7 whole rows, and 0.6 of a row cut by the top edge.
-const ROWS = 12; // drawn rows above the strip; the stage clips the ones it has no room for
+const ROWS = 20; // drawn rows above the strip; the stage clips the ones it has no room for,
+// and the spare rows keep the wall reaching the top if someone enlarges the text
 const STRIP = ROWS; // index of the strip row
 const LEAD = 16; // strip columns to the left of the wall
 const COLS = 16; // more than any screen shows, so the wall always runs off the right edge
@@ -75,6 +76,8 @@ const FIRST_VISIBLE = ROWS - 8; // the row cut by the top edge
   /* A 44px tap target without changing the line */
   .hero__email a {
     padding-block: 13px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   .hero__stage :global(.hero__wall--wide) {

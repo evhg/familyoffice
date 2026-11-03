@@ -38,13 +38,97 @@
   --gutter: 24px;
   --section-space: clamp(96px, 14vw, 192px);
 
-  /* Breeze blocks: one module plus one joint */
-  --pitch: clamp(64px, 16.5vw, 104px);
+  /* Breeze blocks: one module plus one joint. Phones and tablets: the band starts at the
+     left margin and runs off the right edge through the middle of a module (see below). */
+  --pitch: calc((100vw - var(--margin)) / 4.5);
 }
 
+@media (min-width: 493px) {
+  :root {
+    --pitch: calc((100vw - var(--margin)) / 5.5);
+  }
+}
+
+@media (min-width: 602px) {
+  :root {
+    --pitch: calc((100vw - var(--margin)) / 6.5);
+  }
+}
+
+@media (min-width: 711px) {
+  :root {
+    --pitch: calc((100vw - var(--margin)) / 7.5);
+  }
+}
+
+@media (min-width: 864px) {
+  :root {
+    --pitch: calc((100vw - var(--margin)) / 8.5);
+  }
+}
+
+/*
+ * Desktop: the hero wall starts exactly on grid column 7 (the centre of the page plus half
+ * a gutter) and must run off the right edge through the middle of a module, never on a
+ * joint. So the pitch is chosen per band of widths to fit n and a half modules into that
+ * space, staying between about 88px and 108px (enough for the hero text beside seven rows).
+ */
 @media (min-width: 960px) {
   :root {
-    /* At least 96px so the hero text always fits beside seven rows of wall */
-    --pitch: clamp(96px, 6.6vw, 104px);
+    --pitch: calc((50vw - var(--gutter) / 2) / 4.5);
+  }
+}
+
+@media (min-width: 996px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 5.3);
+  }
+}
+
+@media (min-width: 1036px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 5.5);
+  }
+}
+
+@media (min-width: 1212px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 6.5);
+  }
+}
+
+@media (min-width: 1428px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 7.5);
+  }
+}
+
+@media (min-width: 1644px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 8.5);
+  }
+}
+
+@media (min-width: 1860px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 9.5);
+  }
+}
+
+@media (min-width: 2076px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 10.5);
+  }
+}
+
+@media (min-width: 2292px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 11.5);
+  }
+}
+
+@media (min-width: 2508px) {
+  :root {
+    --pitch: calc((50vw - var(--gutter) / 2) / 12.5);
   }
 }

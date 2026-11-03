@@ -108,6 +108,13 @@ a:hover {
   color: var(--teak);
 }
 
+/* A 44px tap target for a link that stands alone in a short line, without moving the line */
+.tap {
+  padding-block: 13px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 :focus-visible {
   outline: 2px solid var(--teak);
   outline-offset: 3px;
@@ -209,7 +216,7 @@ a:hover {
 
 /* Draw the ring on the link's own Plaster box, whatever surface it sits over */
 .skip-link:focus-visible {
-  outline-color: var(--canopy);
+  outline-color: var(--teak);
   outline-offset: -5px;
 }
 

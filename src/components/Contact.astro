@@ -5,7 +5,7 @@ import CopyEmail from './CopyEmail.astro';
 
 <section id="contact" class="contact on-canopy" aria-labelledby="contact-heading">
   <div class="contact__strip">
-    <Wall class="contact__wall" cols={22} rows={1} lead={8} leadRows={[0]} />
+    <Wall class="contact__wall" cols={16} rows={1} lead={16} leadRows={[0]} />
   </div>
   <div class="wrap grid contact__grid">
     <h2 id="contact-heading" class="h-section col-head">Talk to us</h2>
@@ -32,8 +32,8 @@ import CopyEmail from './CopyEmail.astro';
   }
 
   .contact__strip :global(.contact__wall) {
-    /* Line the modules up with the left edge of the page grid, running off both sides */
-    margin-left: calc(max((100% - var(--max-width)) / 2, var(--margin)) - 8 * var(--pitch));
+    /* The same grid as the hero wall and strip, so both strips run off both sides alike */
+    margin-left: calc(50% + var(--gutter) / 2 - 16 * var(--pitch));
   }
 
   .contact__grid {
