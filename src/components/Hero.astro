@@ -9,9 +9,12 @@ const { email } = Astro.props;
 
 // Desktop: the wall fills columns 7 to 12 and bleeds off the top, right and bottom.
 // Its last row continues to the left as the edge strip under the text.
+// The stage is 8.6 modules tall: the strip, 7 whole rows, and 0.6 of a row cut by the top edge.
 const ROWS = 12; // drawn rows above the strip; the stage clips the ones it has no room for
 const STRIP = ROWS; // index of the strip row
 const LEAD = 16; // strip columns to the left of the wall
+const COLS = 16; // more than any screen shows, so the wall always runs off the right edge
+const FIRST_VISIBLE = ROWS - 8; // the row cut by the top edge
 ---
 
 <section class="hero on-canopy" aria-labelledby="hero-heading">
@@ -30,11 +33,12 @@ const LEAD = 16; // strip columns to the left of the wall
 
     <Wall
       class="hero__wall hero__wall--wide"
-      cols={8}
+      cols={COLS}
       rows={ROWS + 1}
       lead={LEAD}
       leadRows={[STRIP]}
-      mark={[ROWS - 5, 2]}
+      mark={[FIRST_VISIBLE + 3, 2]}
+      firstRow={FIRST_VISIBLE}
       animate
     />
   </div>
@@ -68,6 +72,11 @@ const LEAD = 16; // strip columns to the left of the wall
     font-size: var(--size-body);
   }
 
+  /* A 44px tap target without changing the line */
+  .hero__email a {
+    padding-block: 13px;
+  }
+
   .hero__stage :global(.hero__wall--wide) {
     display: none;
   }
@@ -80,7 +89,8 @@ const LEAD = 16; // strip columns to the left of the wall
   @media (min-width: 960px) {
     .hero__stage {
       overflow: hidden;
-      /* Room for about seven rows of wall above the edge strip, or more if the text needs it */
+      /* Seven rows of wall and a cut row above the edge strip. The text is sized to fit;
+         min-height lets the stage grow rather than overlap if someone enlarges the text. */
       min-height: calc(var(--pitch) * 8.6);
       padding-bottom: var(--pitch);
       display: flex;
@@ -90,11 +100,13 @@ const LEAD = 16; // strip columns to the left of the wall
     .hero__grid {
       flex: 1;
       align-content: center;
+      position: relative;
+      z-index: 1;
     }
 
     .hero__text {
       grid-column: 1 / 7;
-      padding-block: 48px 64px;
+      padding-block: 40px 48px;
     }
 
     .hero__stage :global(.hero__wall--wide) {

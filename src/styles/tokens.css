@@ -44,6 +44,7 @@
 
 @media (min-width: 960px) {
   :root {
-    --pitch: clamp(72px, 6.6vw, 104px);
+    /* At least 96px so the hero text always fits beside seven rows of wall */
+    --pitch: clamp(96px, 6.6vw, 104px);
   }
 }

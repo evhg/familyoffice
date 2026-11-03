@@ -12,8 +12,8 @@ export const GET: APIRoute = async () => {
     '',
     '## Site',
     '',
-    `- [Home](${absolute('/')}): who we are, how we partner, track record, partners and contact`,
-    ...(notes.length ? [`- [Notes](${absolute('/notes/')}): plain-English notes on owning and running a business in Thailand`] : []),
+    `- [Home](${absolute('/')})`,
+    ...(notes.length ? [`- [Notes](${absolute('/notes/')}): Plain-English notes on owning and running a business in Thailand.`] : []),
     '',
     ...(notes.length
       ? ['## Notes', '', ...notes.map((n) => `- [${n.data.title}](${absolute(notePath(n))}): ${n.data.description}`), '']

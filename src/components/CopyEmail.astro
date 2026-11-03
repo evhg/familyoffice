@@ -50,12 +50,22 @@ import { EMAIL } from '../config';
     font-family: var(--font-sans);
     font-stretch: var(--heading-stretch);
     font-weight: var(--heading-weight);
-    /* Section-heading size, but never wider than a 320px screen allows */
-    font-size: min(var(--size-section), 6.2vw);
+    /* Section-heading size, unless the address would be wider than the screen
+       (it is about 12.1 times its font size wide) */
+    font-size: min(var(--size-section), (100vw - 2 * var(--margin)) / 12.4);
     line-height: 1.2;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
     overflow-wrap: anywhere;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     text-decoration-thickness: 1px;
+  }
+
+  @media (min-width: 1440px) {
+    .copy-email__address {
+      letter-spacing: -0.01em;
+    }
   }
 
   .copy-email__button {

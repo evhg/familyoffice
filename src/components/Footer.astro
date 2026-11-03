@@ -1,5 +1,5 @@
 ---
-import { COMPANY, EMAIL, LINKEDIN_ERIK, LINKEDIN_SUREKHA, YEAR } from '../config';
+import { COMPANY, EMAIL, LAUNCHED, LINKEDIN_ERIK, LINKEDIN_SUREKHA, YEAR } from '../config';
 import Confirm from './Confirm.astro';
 ---
 
@@ -15,9 +15,11 @@ import Confirm from './Confirm.astro';
             {COMPANY.name}, registration number {COMPANY.number}
           </p>
         ) : (
-          <p>
-            <Confirm>[CONFIRM: once the Thai holding company exists, add its registered name and registration number here.]</Confirm>
-          </p>
+          !LAUNCHED && (
+            <p>
+              <Confirm>[CONFIRM: once the Thai holding company exists, add its registered name and registration number here.]</Confirm>
+            </p>
+          )
         )
       }
     </div>

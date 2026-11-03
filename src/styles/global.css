@@ -65,10 +65,15 @@ h4 {
   text-wrap: balance;
 }
 
-/* Section headings and up: tighten slightly */
-.h-hero,
-.h-section {
+/* Letter-spacing -0.01em from 36px up, 0 below */
+.h-hero {
   letter-spacing: -0.01em;
+}
+
+@media (min-width: 1440px) {
+  .h-section {
+    letter-spacing: -0.01em;
+  }
 }
 
 .h-hero {
@@ -200,6 +205,12 @@ a:hover {
 
 .skip-link:focus {
   transform: none;
+}
+
+/* Draw the ring on the link's own Plaster box, whatever surface it sits over */
+.skip-link:focus-visible {
+  outline-color: var(--canopy);
+  outline-offset: -5px;
 }
 
 /* Previews only: copy that still needs an answer before launch */

@@ -4,7 +4,7 @@ import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-wdth-
 import newsreaderLatin from '@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2?url';
 import Analytics from '@vercel/analytics/astro';
 import { LAUNCHED } from '../config';
-import { absolute } from '../lib/site';
+import { SHARE_TITLE, absolute } from '../lib/site';
 import Sprite from '../illustrations/Sprite.astro';
 import Footer from '../components/Footer.astro';
 
@@ -53,13 +53,14 @@ const ld = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null;
     <meta property="og:image" content={shareImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={shareTitle} />
+    <meta property="og:image:alt" content={SHARE_TITLE} />
     {published && <meta property="article:published_time" content={published.toISOString()} />}
     {modified && <meta property="article:modified_time" content={modified.toISOString()} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={shareTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={shareImage} />
+    <meta name="twitter:image:alt" content={SHARE_TITLE} />
 
     {ld && <script type="application/ld+json" set:html={ld} />}
   </head>

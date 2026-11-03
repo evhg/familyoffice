@@ -20,19 +20,37 @@ interface Props {
   mark?: [number, number];
   /** Light up row by row on first load. */
   animate?: boolean;
+  /** First row that can be seen; rows above it are clipped and light up with it. */
+  firstRow?: number;
   /** Offset the checkerboard, so strips can continue the pattern of the wall above. */
   phase?: number;
   class?: string;
 }
 
-const { cols, rows, lead = 0, leadRows = [], mark, animate = false, phase = 0, class: className } = Astro.props;
+const {
+  cols,
+  rows,
+  lead = 0,
+  leadRows = [],
+  mark,
+  animate = false,
+  firstRow = 0,
+  phase = 0,
+  class: className,
+} = Astro.props;
 
 type Cell = { x: number; y: number; name: ModuleName; delay: number; isMark: boolean };
 const cells: Cell[] = [];
 
-// Total time for the sequence: about 1.6 seconds including each opening's fade.
-const ROW_STEP = 130;
-const COL_STEP = 35;
+// The sequence: openings light up row by row with a slight diagonal delay, finishing by
+// about 1.1s, then the Mark turns Turmeric, ending at about 1.6s.
+const FADE = 420; // each opening's own fade, in ms (matches the CSS below)
+const OPENINGS_DONE = 1100;
+const COL_STEP = 20;
+const DIAGONAL_COLS = 7; // columns that add delay; further columns light with the 7th
+const visibleRows = rows - firstRow;
+const ROW_STEP = Math.min(180, (OPENINGS_DONE - FADE - DIAGONAL_COLS * COL_STEP) / Math.max(visibleRows - 1, 1));
+const MARK_AT = OPENINGS_DONE;
 
 for (let r = 0; r < rows; r++) {
   const from = leadRows.includes(r) ? -lead : 0;
@@ -42,7 +60,7 @@ for (let r = 0; r < rows; r++) {
       x: (c + lead) * PITCH,
       y: r * PITCH,
       name: isMark ? 'mark' : checker(r + phase, c),
-      delay: r * ROW_STEP + Math.max(c, 0) * COL_STEP,
+      delay: Math.round(Math.max(r - firstRow, 0) * ROW_STEP + Math.min(Math.max(c, 0), DIAGONAL_COLS) * COL_STEP),
       isMark,
     });
   }
@@ -55,7 +73,7 @@ const height = rows * PITCH;
 <svg
   class:list={['wall', { 'wall--animate': animate }, className]}
   viewBox={`0 0 ${width} ${height}`}
-  style={`--cols:${cols + lead};--rows:${rows}`}
+  style={`--cols:${cols + lead};--rows:${rows};--mark-at:${MARK_AT}ms`}
   aria-hidden="true"
   focusable="false"
 >
@@ -77,8 +95,9 @@ const height = rows * PITCH;
     display: block;
     width: calc(var(--cols) * var(--pitch));
     height: calc(var(--rows) * var(--pitch));
-    /* The grid is drawn on a 126 unit pitch; place the 6 unit joint evenly around each module. */
     overflow: visible;
+    /* Decorative: never catch clicks or text selection meant for the text beside it */
+    pointer-events: none;
   }
 
   .opening {
@@ -97,7 +116,7 @@ const height = rows * PITCH;
     .wall--animate .opening--mark {
       animation:
         light-up 420ms ease-out var(--d, 0ms) both,
-        mark-up 500ms ease-in-out 1300ms forwards;
+        mark-up 500ms ease-in-out var(--mark-at, 1100ms) forwards;
     }
   }
 

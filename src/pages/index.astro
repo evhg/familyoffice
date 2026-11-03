@@ -201,7 +201,7 @@ const jsonLd = graph(websiteSchema(), organizationSchema(), ...personSchemas());
             <p class="measure">Plain-English notes on owning and running a business in Thailand.</p>
             <ul role="list" class="entries">
               {notes.map((note) => (
-                <li class="entry">
+                <li class="entry entry--small">
                   <Tile name={noteModule(note)} size={40} />
                   <div class="entry__text measure">
                     <h3 class="h-item">
@@ -263,7 +263,7 @@ const jsonLd = graph(websiteSchema(), organizationSchema(), ...personSchemas());
 
   .entry {
     display: grid;
-    grid-template-columns: 56px minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr);
     column-gap: clamp(20px, 2.4vw, 32px);
     align-items: start;
   }
@@ -274,6 +274,24 @@ const jsonLd = graph(websiteSchema(), organizationSchema(), ...personSchemas());
 
   .entry__text h3 {
     margin-bottom: 0.35em;
+  }
+
+  /* 44px tap target for links that head an entry */
+  .entry__text h3 a {
+    display: inline-block;
+    padding-block: 10px;
+    margin-block: -10px;
+  }
+
+  /* Desktop: hang the tile to the left so the text keeps the full content column */
+  @media (min-width: 960px) {
+    .entry {
+      margin-left: calc(-56px - clamp(20px, 2.4vw, 32px));
+    }
+
+    .entry--small {
+      margin-left: calc(-40px - clamp(20px, 2.4vw, 32px));
+    }
   }
 
   .entry__text p + p {
